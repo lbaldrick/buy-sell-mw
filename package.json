@@ -1,0 +1,25 @@
+{
+  "name": "buy-sell-mw",
+  "version": "1.0.0",
+  "description": "Node js middleware for buy sell auction appi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.9",
+    "mongoose-double": "0.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "nodemon": "^1.14.11",
+    "request": "^2.83.0"
+  }
+}
