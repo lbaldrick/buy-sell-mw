@@ -1,5 +1,7 @@
 class AccountDetailsResponseDto {
-    constructor(accountDetails) {
+    constructor(accountDetails, token) {
+        this.auth = true;
+        this.token = token;
         this.accountDetails = accountDetails;
     }
 }

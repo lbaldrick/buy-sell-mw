@@ -29,7 +29,11 @@ const AccountSchema = new mongoose.Schema({
     dateOpened: {
         type: Number,
         required: true,
-    }
+    },
+    password: {
+        type: String,
+        required: true,
+    },
 });
 
 const Account = mongoose.model('accounts', AccountSchema);

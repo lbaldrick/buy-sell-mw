@@ -1,38 +1,43 @@
 const Account = require('../../schemas/Account');
 const mongoose = require('mongoose');
+const AuthUtil = require('../../utils/AuthUtil');
 
-const insertAccountIntoDb = ({ username, firstName, lastName }) => {
+const insertAccountIntoDb = ({ username, firstName, lastName, password }) => {
     return new Promise((resolve, reject) => {
-        if (username && firstName && lastName) {
+        if (username && firstName && lastName && password) {
             const balance = 0.00;
             const dateOpened = Date.now();
             const accId = new mongoose.mongo.ObjectId();
-            Account.create({ accId, username, firstName, lastName, dateOpened, balance }, (error, account) => {
+            Account.create({ accId, username, firstName, lastName, dateOpened, balance, password }, (error, account) => {
                 if (error) {
                     reject(error);
                 } else {
-                    console.log(account)
+                    console.log(account);
                     resolve(account);
                 }
             });
         } else {
-            reject('User data missing');
+            reject(`User data missing username:${username} firstName:${firstName} lastName:${lastName}`);
         }
     });
 };
 
-const getAccount = ({ username }) => {
+const getAccount = ({ username, password }) => {
     return new Promise((resolve, reject) => {
-        if (username) {
+        console.log(`AccountService: getAccount with password ${password} username: ${username}`);
+        if (username && password) {
             Account.findOne({$query: { 'username': username }, $maxTimeMS: 1000}, (error, account) => {
                 if (error) {
                     reject(error);
-                } else {
+                } else if (account && AuthUtil.compare(password, account.password)) {
+                    console.log(`AccountService: getAccount successful account found  ${account}`);
                     resolve(account);
+                } else {
+                    reject(error);
                 }
             });
         } else {
-            reject('Username missing');
+            reject('Username or password missing');
         }
     });
 };
